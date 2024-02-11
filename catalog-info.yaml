@@ -32,20 +32,20 @@ spec:
 #   children: []
 #   members:
 #     - user:default/irados
-# ---
-# apiVersion: backstage.io/v1alpha1
-# kind: Component
-# metadata:
-#   name: a-team-box
-#   title: Box für some-Team # optional, human readable component name
-#   description: Box docu test catalog.
-#   tags:
-#     - box
-#     - test
-#   annotations:
-#     github.com/project-slug: <github-org>/<github-repo>
-# spec:
-#   type: box
-#   # owner: user:irados
-#   system: gcp-system
-#   lifecycle: experimental
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: a-team-box
+  title: Box für some-Team # optional, human readable component name
+  description: Box docu test catalog.
+  tags:
+    - box
+    - test
+  annotations:
+    github.com/project-slug: <github-org>/<github-repo>
+spec:
+  type: box
+  # owner: user:irados
+  system: gcp-system
+  lifecycle: experimental
