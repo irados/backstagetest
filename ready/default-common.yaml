@@ -1,0 +1,57 @@
+# The environment name. do not change this
+environment: common
+
+# project prefix. Provided by requesting team
+project_prefix:
+
+# Provided by requesting team. Used in all the project names except for tools. 2-12 character limit.
+purpose:
+
+# Provided by requesting team. Must be the same as purpose. Used in the tools project name.
+team_name:
+
+# Provided by requesting team. Usually the same as purpose.
+developers_group_name:
+
+# list of service accounts to be whitelisted  for perimeter wide access
+perimeter_whitelisted_service_accounts: [ ]
+
+# List of GCP APIs that must be enabled in the common project
+activate_apis_cloudbuild_project: [ ]
+
+# set of labels that is shared across all projects of the box
+labels: { }
+
+# manual change trigger for rebuilding cloudbuild images (e.g. if a new base image is available)
+retrigger_image_builder: "2022-04-26 00:00:00 +0000 UTC"
+
+# mapping describing the subnets that can be used for creating VPC connectors
+#
+# Example for such a mapping (usually it is one subnet per region with 2 regions in total)
+#
+#  sb-c-mythbusters-common-tools-europe-west3-connector: europe-west3
+#   sb-c-mythbusters-common-tools-europe-west4-connector: europe-west4
+tools_default_connector_subnets: { }
+
+# Optional - specify custom cloudbuild config file for tools-infra.
+tools_pipeline_filename:
+
+# List of login ids (not e-mail addresses) of people that will own the developer group in IAMAPP
+developers_group_owners: [ "group:default/irados" ]
+
+# List of initial login ids (not e-mail addresses) of people that will own the secret manager non-prod and prod group in IAMAPP. Use only IAMAPP to update values.
+initial_secretmanager_group_owners: [ ]
+
+# set this to true so that all payback can clone and read (but not write) your cloud source repositories hosted in the tools project.
+# If you need to restrict some repositories or want to have fine-grained access control this needs to be done on repository level and
+# this setting must be set to false
+tools_csr_all_payback_can_read: true
+
+# set to enable to generate a weekly (Saturday 12:00) ondemand scan for all container images in the artifact repository in the tools project
+enable_ondemand_scanning: false
+
+#If true, the dataplatform_sa is able to write into the repos of the tools project as well as create and delete repositories
+enable_dataplatform_integration: false
+
+# E-mail address to receive notifications (for google incidents, billing topics, security etc.) and budget alerts
+google_essential_contact_budget_alert_mail:
