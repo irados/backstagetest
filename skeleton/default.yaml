@@ -122,7 +122,7 @@ cloud_armor_rate_limit_rules: { }
 #    expression: request.path.matches('/challenges/mobile/') && !has(request.headers['secure-token'])
 cloud_armor_extra_custom_rules: { }
 # List of login ids (not e-mail addresses) of people that will own the secret manager tools group in IAMAPP
-initial_secretmanager_group_owners: [ "group:default/irados" ]
+initial_secretmanager_group_owners: [ ${{values.owner | dump}} ]
 
 # BigQuery daily query size limit in MiB. Can be any nonnegative integer. Default value is 1048576
 #bq_daily_query_size_limit:

@@ -37,7 +37,7 @@ tools_default_connector_subnets: { }
 tools_pipeline_filename:
 
 # List of login ids (not e-mail addresses) of people that will own the developer group in IAMAPP
-developers_group_owners: [ "group:default/irados" ]
+developers_group_owners: [ ${{values.owner | dump}} ]
 
 # List of initial login ids (not e-mail addresses) of people that will own the secret manager non-prod and prod group in IAMAPP. Use only IAMAPP to update values.
 initial_secretmanager_group_owners: [ ]

@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.name | dump }}
+  title: Box für A-Team # optional, human readable component name
+  description: ${{values.description | dump}}
+  tags:
+    - gcp
+    - box
+    - test
+  annotations:
+    github.com/project-slug: <github-org>/<github-repo>
+spec:
+  type: box
+  owner: ${{values.owner | dump}}
+  system: gcp-system
+  lifecycle: experimental

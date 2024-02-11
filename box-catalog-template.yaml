@@ -1,0 +1,88 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-box
+  title: Create Box instance
+  description: Will create a new gcp Box instance for ...
+  tags:
+    - gcp
+    - box
+    - infrastructure
+spec:
+  owner: Cloud crew
+  type: box
+  parameters:
+    - title: "Provide information"
+      required:
+        - owner
+        - name
+      properties:
+        owner:
+          title: "Owner"
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds:
+              - Group
+        description:
+          title: Description
+          type: string
+          description: A description for the component
+        name:
+          title: "name"
+          type: string
+          description: Unique name 
+        token:
+          type: string
+          title: "token"
+  steps:
+    - id: fetch
+      name: Template Skeleton files
+      action: fetch:template
+      input:
+        url: ./skeleton
+        targetPath: ./tmp
+        values:
+          name: ${{ parameters.name }}
+          description: ${{ parameters.description }}
+          owner: ${{ parameters.owner }}
+          GITHUB_TOKEN: ${{ parameters.token }}
+    # - id: template
+    #   name: Fetch Skeleton + Template
+    #   action: fetch:template
+    #   input:
+    #     url: ./skeleton
+    #     targetPath: temp
+    #     copyWithoutRender:
+    #       - .github/workflows/*
+    #     values:
+    #       name: '${{ parameters.name }}'
+    - id: publish
+      name: Create a pull request
+      action: publish:bitbucketServer
+      input:
+        # url: ./box
+        repoUrl: 'https://pb-git.intra.loyaltypartner.com/scm/cloud/backstage-poc.git'
+        # targetPath: 'common/'
+        token: ${{ GITHUB_TOKEN }}
+        title: "feat(backstage): 'add backstage box entities for ${{ parameters.name }}'"
+        branchName: master
+        description: This is ${{ parameters.name }}
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        # url: ./tmp
+        repoContentsUrl: 'https://pb-git.intra.loyaltypartner.com/scm/cloud/backstage-poc.git'
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      # - url: ${{steps.publish.output.remoteUrl}}
+      - token: ${{ GITHUB_TOKEN }}
+        text: "Pull request"
+
+
+#https://pb-git.intra.loyaltypartner.com/scm/~irados/gcp-ir-test.git
+#https://pb-git.intra.loyaltypartner.com/scm/cloud/cloud-deploy-poc.git
