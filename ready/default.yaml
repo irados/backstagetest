@@ -1,0 +1,132 @@
+######################################
+# required common project information
+######################################
+
+# the project number of the common project. Must not be null
+common_project_number:
+# the project number of the common tools project. Must not be null
+tools_common_project_number:
+# the project id of the common project- Must not be null
+common_project_id:
+
+######################################
+# environment specific configurations
+######################################
+
+# use any of the base configuration keys to configure a different value for the respective environment.
+# Lists (e.g. extra developer roles) are not additive towards the base configuration values that belong to the named key
+non-production: { }
+production: { }
+
+####################################
+# base configuration
+####################################
+
+# The purpose used for non-production and production. Must not be null
+purpose:
+
+# roles to be assigned to the environment specific deployer.
+deployer_role_mapping:
+  roles:
+    - organizations/69907851635/roles/secretmanagerAdminExVersions
+    - roles/artifactregistry.admin
+    - roles/compute.admin
+    - roles/dns.admin
+    - roles/iam.serviceAccountCreator
+    - roles/iam.serviceAccountDeleter
+    - roles/iam.serviceAccountUser
+    - roles/logging.admin
+    - roles/monitoring.admin
+    - roles/ondemandscanning.admin
+    - roles/storage.admin
+    - roles/vpcaccess.admin
+
+
+# roles to be assigned to the environment specific planner and developers.
+# Note that production environments do not have a planner (but developers)
+planner_role_mapping:
+  roles:
+    - organizations/69907851635/roles/connectivityTestsUsers
+    - organizations/69907851635/roles/serviceAccountViewerExKeys
+    - organizations/69907851635/roles/storageBucketViewer
+    - roles/artifactregistry.reader
+    - roles/cloudfunctions.viewer
+    - roles/cloudscheduler.viewer
+    - roles/cloudsql.viewer
+    - roles/compute.viewer
+    - roles/iam.roleViewer
+    - roles/logging.viewer
+    - roles/monitoring.viewer
+    - roles/secretmanager.viewer
+    - roles/storage.objectViewer
+    - roles/vpcaccess.viewer
+    - roles/run.viewer
+    - roles/dns.reader
+
+# List of additional roles to be granted to the developers group
+extra_developers_roles: [ ]
+
+# The list of GCP APIs that should be enabled in the utils project
+activate_apis_util: [ ]
+
+# The list of GCP APIs that should be enabled in the main project
+activate_apis_project: [ ]
+
+# list of service accounts to be whitelisted  for perimeter wide access
+perimeter_whitelisted_service_accounts: [ ]
+
+# Configure additional service accounts with project level permissions
+#
+# Example for an entry to this list:
+#
+# - account_id: sa-gluent
+#    display_name: sa-pww-gluent-ft-gluent
+#    description: Service Account for Gluent
+#    roles:
+#  -   roles/bigquery.user
+project_level_service_accounts: [ ]
+
+# configures if the worker pool should use private IPs (required for e.g. on prem Bitbucket access)
+worker_pool_no_external_ip: true
+
+# configures the compute instance type used by the worker pool
+worker_pool_machine_type: e2-standard-4
+
+# Adds throttling rule objects to fine tune Cloud Armor
+#
+# Example for an a single thorttleing rile object:
+#
+# Throttle Rule:
+#    description         : "Throttling for all incoming requests based on secure-token header"
+#    action              : "throttle"
+#    priority            : 210
+#    ban_duration_sec    : 0
+#    conform_action      : "allow"
+#    enforce_on_key      : "HTTP_HEADER"
+#    enforce_on_key_name : "secure-token"
+#    exceed_action       : "deny(429)"
+#    count               : 450
+#    interval_sec        : 60
+#    versioned_expr      : "SRC_IPS_V1"
+#    src_ip_ranges       : ["*"]
+cloud_armor_rate_limit_rules: { }
+
+# Configures additional cloud armor rules
+#
+# Example for a single additional rule
+#
+# MTS Token:
+#    description: MTS token requirement for mobile endpoint only
+#    action: deny(404)
+#    priority: 105
+#    expression: request.path.matches('/challenges/mobile/') && !has(request.headers['secure-token'])
+cloud_armor_extra_custom_rules: { }
+# List of login ids (not e-mail addresses) of people that will own the secret manager tools group in IAMAPP
+initial_secretmanager_group_owners: [ "group:default/irados" ]
+
+# BigQuery daily query size limit in MiB. Can be any nonnegative integer. Default value is 1048576
+#bq_daily_query_size_limit:
+
+# enable this if you want to use Cloud SQL in your box. This will set the
+# necessary planner and deployer permissions and enable the api. 
+use_cloud_sql: false
