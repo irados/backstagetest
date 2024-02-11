@@ -73,48 +73,12 @@ spec:
         targetPath: ${{ parameters.targetPath if parameters.targetPath else '.' }}
         commitAction: create
         removeSourceBranch: true
-    # - id: publish
-    #   name: Publish
-    #   action: publish:bitbucketServer:pull-request
-    #   input:
-    #     fromRef: {
-    #       "id":"refs/heads/feature",
-    #       "repository":{
-    #         "slug":"testbranch",
-    #         "name":None,
-    #         "project":{
-    #             "key":"~irados"
-    #             }
-    #         }
-    #     }
-    #     toRef: {
-    #       "id":"refs/heads/master",
-    #       "repository":{
-    #         "slug":"master",
-    #         "name":None,
-    #         "project":{
-    #             "key":"~irados"
-    #             }
-    #         }
-    #     }
-    #       # id: "ref/heads/testbranch"
-    #       # displayId: 'testbranch',
-    #       # type: 'BRANCH' }
-    #     # repoUrl: scm.test.xxx.se?repo=${{ parameters.repoName }}&project=${{ parameters.projectName }}
-    #     # sourceBranch: ${{ parameters.prBranch }}
-    #     # targetBranch: ${{ parameters.targetBranch }}
-    #     sourceBranch: 'some testbranch'
-    #     targetBranch: 'master'
-    #     title: Merge new box into projects repo
-    #     description: This PR was created by a Backstage scaffolder task to add CI-pipeline to the project.
-    #     token: ${{ parameters.token }}
-
     - id: register
       name: Register
       action: catalog:register
       input:
         repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
-        catalogInfoPath: '/catalog-info.yaml'
+        catalogInfoPath: './ready/catalog-info.yaml'
 
   output:
     links:
