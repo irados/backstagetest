@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "box1"
+  title: Box für A-Team # optional, human readable component name
+  description: "some crazy box"
+  tags:
+    - gcp
+    - box
+    - test
+  annotations:
+    github.com/project-slug: <github-org>/<github-repo>
+spec:
+  type: box
+  owner: "group:default/irados"
+  system: gcp-system
+  lifecycle: experimental
