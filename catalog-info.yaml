@@ -1,13 +1,13 @@
-apiVersion: backstage.io/v1alpha1
-kind: System
-metadata:
-  title: Gcp system
-  name: gcp-system
-  description: complette gcp platform.
-spec:
-  owner: group:gcp-ug-something
-  domain: sample-domain
----
+# apiVersion: backstage.io/v1alpha1
+# kind: System
+# metadata:
+#   title: Gcp system
+#   name: gcp-system
+#   description: complette gcp platform.
+# spec:
+#   owner: group:gcp-ug-something
+#   domain: sample-domain
+# ---
 apiVersion: backstage.io/v1alpha1
 kind: User
 metadata:
