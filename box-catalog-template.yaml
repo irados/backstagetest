@@ -58,6 +58,7 @@ spec:
           repo: ${{ parameters.repo }}
           description: ${{ parameters.description }}
           owner: ${{ parameters.owner }}
+          GHE_TOKEN: ${{ parameters.token }}
     - id: publish
       name: Publish
       action: publish:github:pull-request
