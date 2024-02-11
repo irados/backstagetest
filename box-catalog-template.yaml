@@ -9,7 +9,7 @@ metadata:
     - box
     - infrastructure
 spec:
-  owner: Cloud crew
+  owner: irados
   type: box
   parameters:
     - title: "Provide information"
@@ -33,48 +33,86 @@ spec:
           title: "name"
           type: string
           description: Unique name 
+        repo:
+          title: "repo"
+          type: string
+          description: Unique name 
         token:
           type: string
           title: "token"
   steps:
+    - id: fetchRepo
+      name: Fetch Repo
+      action: fetch:plain
+      input:
+        # url: https://irados:${{ parameters.token }}@github.com/irados/backstagetest.git
+        url: https://github.com/irados/backstagetest.git
     - id: fetch
       name: Template Skeleton files
       action: fetch:template
       input:
         url: ./skeleton
-        targetPath: ./tmp
+        # targetPath: ./tmp
         values:
           name: ${{ parameters.name }}
+          repo: ${{ parameters.repo }}
           description: ${{ parameters.description }}
           owner: ${{ parameters.owner }}
-          GITHUB_TOKEN: ${{ parameters.token }}
-    # - id: template
-    #   name: Fetch Skeleton + Template
-    #   action: fetch:template
-    #   input:
-    #     url: ./skeleton
-    #     targetPath: temp
-    #     copyWithoutRender:
-    #       - .github/workflows/*
-    #     values:
-    #       name: '${{ parameters.name }}'
     - id: publish
-      name: Create a pull request
-      action: publish:bitbucketServer
+      name: Publish
+      action: publish:github:pull-request
       input:
-        # url: ./box
-        repoUrl: 'https://pb-git.intra.loyaltypartner.com/scm/cloud/backstage-poc.git'
-        # targetPath: 'common/'
-        token: ${{ GITHUB_TOKEN }}
-        title: "feat(backstage): 'add backstage box entities for ${{ parameters.name }}'"
-        branchName: master
-        description: This is ${{ parameters.name }}
+        repoUrl: 'github.com/?repo=backstagetest&project=irados&owner=irados'
+        title: Creating catalog-info.yaml ${{ parameters.name }} for backstage
+        branchName: 'testbranch'
+        sourceBranch: 'testbranch'
+        description: |
+          # New project: ${{ parameters.name }}
+          ${{ parameters.description if parameters.description }}
+        targetPath: ${{ parameters.targetPath if parameters.targetPath else '.' }}
+        commitAction: create
+        removeSourceBranch: true
+    # - id: publish
+    #   name: Publish
+    #   action: publish:bitbucketServer:pull-request
+    #   input:
+    #     fromRef: {
+    #       "id":"refs/heads/feature",
+    #       "repository":{
+    #         "slug":"testbranch",
+    #         "name":None,
+    #         "project":{
+    #             "key":"~irados"
+    #             }
+    #         }
+    #     }
+    #     toRef: {
+    #       "id":"refs/heads/master",
+    #       "repository":{
+    #         "slug":"master",
+    #         "name":None,
+    #         "project":{
+    #             "key":"~irados"
+    #             }
+    #         }
+    #     }
+    #       # id: "ref/heads/testbranch"
+    #       # displayId: 'testbranch',
+    #       # type: 'BRANCH' }
+    #     # repoUrl: scm.test.xxx.se?repo=${{ parameters.repoName }}&project=${{ parameters.projectName }}
+    #     # sourceBranch: ${{ parameters.prBranch }}
+    #     # targetBranch: ${{ parameters.targetBranch }}
+    #     sourceBranch: 'some testbranch'
+    #     targetBranch: 'master'
+    #     title: Merge new box into projects repo
+    #     description: This PR was created by a Backstage scaffolder task to add CI-pipeline to the project.
+    #     token: ${{ parameters.token }}
+
     - id: register
       name: Register
       action: catalog:register
       input:
-        # url: ./tmp
-        repoContentsUrl: 'https://pb-git.intra.loyaltypartner.com/scm/cloud/backstage-poc.git'
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
         catalogInfoPath: '/catalog-info.yaml'
 
   output:
@@ -82,7 +120,3 @@ spec:
       # - url: ${{steps.publish.output.remoteUrl}}
       - token: ${{ GITHUB_TOKEN }}
         text: "Pull request"
-
-
-#https://pb-git.intra.loyaltypartner.com/scm/~irados/gcp-ir-test.git
-#https://pb-git.intra.loyaltypartner.com/scm/cloud/cloud-deploy-poc.git
