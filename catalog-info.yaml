@@ -46,6 +46,6 @@ metadata:
     github.com/project-slug: <github-org>/<github-repo>
 spec:
   type: box
-  # owner: user:irados
+  owner: user:irados
   system: gcp-system
   lifecycle: experimental
