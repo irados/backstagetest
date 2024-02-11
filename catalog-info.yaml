@@ -7,17 +7,17 @@ metadata:
 spec:
   owner: group:gcp-ug-something
   domain: sample-domain
-# ---
-# apiVersion: backstage.io/v1alpha1
-# kind: User
-# metadata:
-#   name: irados
-# spec:
-#   profile:
-#     displayName: Ivan Rados
-#     email: ivan.rados@bla.com
-#   memberOf: [Somegroup]
-# ---
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: irados
+spec:
+  profile:
+    displayName: Ivan Rados
+    email: ivan.rados@bla.com
+  memberOf: [Somegroup]
+---
 # apiVersion: backstage.io/v1alpha1
 # kind: Group  
 # metadata:
