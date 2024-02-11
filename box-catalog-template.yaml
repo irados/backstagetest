@@ -66,6 +66,7 @@ spec:
         title: Creating catalog-info.yaml ${{ parameters.name }} for backstage
         branchName: 'testbranch'
         sourceBranch: 'testbranch'
+        token: ${{ parameters.token }}
         description: |
           # New project: ${{ parameters.name }}
           ${{ parameters.description if parameters.description }}
