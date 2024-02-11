@@ -45,14 +45,13 @@ spec:
       name: Fetch Repo
       action: fetch:plain
       input:
-        # url: https://irados:${{ parameters.token }}@github.com/irados/backstagetest.git
         url: https://github.com/irados/backstagetest.git
-    - id: fetch
+    - id: template
       name: Template Skeleton files
       action: fetch:template
       input:
         url: ./skeleton
-        # targetPath: ./tmp
+        targetPath: ./ready
         values:
           name: ${{ parameters.name }}
           repo: ${{ parameters.repo }}
