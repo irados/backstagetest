@@ -48,4 +48,4 @@ spec:
   type: box
   owner: user:irados
   system: gcp-system
-  lifecycle: experimental
+  lifecycle: production
