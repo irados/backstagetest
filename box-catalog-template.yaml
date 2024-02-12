@@ -40,6 +40,17 @@ spec:
         token:
           type: string
           title: "token"
+    - title: Choose a Repository Location
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Location of the repository
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
   steps:
     - id: fetchRepo
       name: Fetch Repo
