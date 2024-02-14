@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: a-team-bla-box
+  title: Box für some-Team # optional, human readable component name
+  description: Box docu test catalog.
+  tags:
+    - box
+    - test
+  annotations:
+    github.com/project-slug: <github-org>/<github-repo>
+spec:
+  type: bla
+  owner: user:irados
+  system: gcp-system
+  lifecycle: production
